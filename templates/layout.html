@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ReadLog: {% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-white text-dark">
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom shadow-sm py-3">
+        <div class="container px-4">
+            <a class="navbar-brand fw-semibold tracking-tight text-primary fs-4" href="{{ url_for('index') }}">ReadLog</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if session.get("user_id") %}
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0 ms-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link px-3 {% if request.endpoint == 'index' %}active fw-medium{% endif %}" href="{{ url_for('index') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-3 {% if request.endpoint == 'add' %}active fw-medium{% endif %}" href="{{ url_for('add') }}">Add Book</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-dark btn-sm px-4 rounded-pill ms-md-2" href="{{ url_for('logout') }}">Log Out</a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link px-3" href="{{ url_for('register') }}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-dark btn-sm text-white px-4 rounded-pill ms-md-2" href="{{ url_for('login') }}">Log In</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% if get_flashed_messages() %}
+        <div class="container mt-3">
+            <div class="alert alert-light border shadow-sm rounded-3 text-center py-2" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Main Content Body -->
+    <main class="container my-5 flex-grow-1">
+        {% block main %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white text-center text-muted py-4 border-top mt-auto">
+        <div class="container">
+            <small class="text-secondary">&copy; 2026 ReadLog. Designed with care.</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

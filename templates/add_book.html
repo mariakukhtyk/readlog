@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Book
+{% endblock %}
+
+{% block main %}
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+                <h2 class="h4 fw-bold mb-4 text-center">Add a New Book</h2>
+                <form action="{{ url_for('add') }}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-medium">Book Title</label>
+                        <input autocomplete="off" autofocus class="form-control rounded-3 py-2" name="title" placeholder="e.g. Atomic Habits" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-secondary small fw-medium">Author</label>
+                        <input autocomplete="off" class="form-control rounded-3 py-2" name="author" placeholder="e.g. James Clear" type="text">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small fw-medium">Reading Status</label>
+                        <select class="form-select rounded-3 py-2" name="status">
+                            <option disabled selected>Select status...</option>
+                            <option value="want_to_read">Want to Read</option>
+                            <option value="reading">Currently Reading</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-dark w-100 rounded-pill py-2 fw-medium" type="submit">Save to Library</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
